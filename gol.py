@@ -1,5 +1,6 @@
 # Game of Life: https://robertheaton.com/2018/07/20/project-2-game-of-life/
 import random
+import time
 
 def dead_board(width, height):
     board = [[0 for _ in range(0, width)] for _ in range(0, height)]
@@ -42,11 +43,11 @@ def count_neighbors(board, x, y):
     return live_neighbors
 
 def step_state(board):
-    new_board = [[0 for _ in range(0, len(board))] for _ in range(0,len(board[0]))]
+    new_board = [[0 for _ in range(0, len(board[0]))] for _ in range(0,len(board))]
     for x in range(0, len(board)):
         for y in range(0, len(board[x])):
             n = count_neighbors(board, x, y)
-            if board[x][y]:
+            if board[x][y] == 1:
                 if n <= 1 or n > 3: new_board[x][y] = 0
                 else: new_board[x][y] = 1
             else:
@@ -62,3 +63,11 @@ def render_board(board):
             else:
                 print(chr(0x2588), end='', flush=True)
         print("")
+
+if __name__ == '__main__':
+    board = rand_board(30, 20)
+    while True:
+        render_board(board)
+        board = step_state(board)
+        time.sleep(3)
+        print('')
